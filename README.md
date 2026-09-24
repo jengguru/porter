@@ -113,7 +113,7 @@ explains why it can't set it, instead of failing silently.
 | General | Menu bar icon: app colors or monochrome | App colors |
 | General | Launch at login (`SMAppService`) | Off |
 | Menu | Browsers shown in the menu, drag to reorder | All shown |
-| Shortcut | Global shortcut, can be changed or turned off | ⌃⌥⌘B |
+| Shortcut | Global shortcut, can be changed or turned off; conflicting ones are refused | ⌃⌥⌘B |
 | Advanced | Also set the `.html` (`public.html`) file handler | Off |
 | Advanced | Auto-confirm the macOS prompt (Accessibility) | Off |
 | Advanced | Notification after switching | Off |
@@ -125,6 +125,17 @@ a malformed bundle ID or a shortcut without ⌘/⌥/⌃ falls back to the defaul
 
 - **No network.** Porter only makes local LaunchServices calls. It opens no connections and has
   no analytics, update checks or crash reporting.
+- **The shortcut never overrides another one.** A global shortcut beats every app, so Porter
+  only accepts one that uses at least two of ⌘ ⌥ ⌃ (⌘-letter, ⌃-letter and ⌥-letter belong to apps,
+  Terminal and typing). It must also not be:
+  - enabled in System Settings › Keyboard › Keyboard Shortcuts, read with `CopySymbolicHotKeys`;
+  - a standard macOS or browser/Finder menu shortcut such as ⌃⌘Q Lock Screen or ⌥⌘B Bookmarks
+    (list in `HotkeyValidator`);
+  - held by another app's global shortcut. Porter registers it exclusively and backs off if macOS refuses.
+
+  Porter checks when you record a shortcut and again at every launch. If the shortcut is taken, it
+  stays off and both the menu and Settings say why. Shortcuts that exist only inside a particular
+  third-party app can't be detected. If one stops working, choose another shortcut in Porter.
 - **Hotkey without keyboard monitoring.** The shortcut uses the Carbon `RegisterEventHotKey` API,
   so macOS delivers only that one combination to Porter. It needs no Accessibility or Input
   Monitoring permission. While you record a new shortcut, Porter reads keys from its own

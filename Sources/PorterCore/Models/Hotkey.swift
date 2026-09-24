@@ -25,10 +25,18 @@ public struct Hotkey: Equatable, Sendable {
     /// ⌃⌥⌘B (key code 11 is `kVK_ANSI_B`).
     public static let `default` = Hotkey(keyCode: 11, modifiers: [.control, .option, .command])
 
-    /// A global shortcut needs at least one of ⌘ ⌥ ⌃ so it can't swallow ordinary typing,
-    /// and must be a key we can name.
+    /// ⌘ ⌥ ⌃ — ⇧ doesn't count, since ⇧ plus one of these is still a common app shortcut.
+    public static let primaryModifiers: [Modifiers] = [.command, .option, .control]
+
+    /// A global shortcut takes priority over every app, so it must be hard to collide with:
+    /// at least two of ⌘ ⌥ ⌃. That rules out ⌘-letter / ⌃-letter app and Terminal shortcuts
+    /// and ⌥-letter, which types characters (⌥B = ∫).
+    public var hasEnoughModifiers: Bool {
+        Self.primaryModifiers.filter { modifiers.contains($0) }.count >= 2
+    }
+
     public var isValid: Bool {
-        !modifiers.isDisjoint(with: [.command, .option, .control]) && KeyNames.name(for: keyCode) != nil
+        hasEnoughModifiers && KeyNames.name(for: keyCode) != nil
     }
 
     public var displayString: String {

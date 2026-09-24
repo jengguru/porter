@@ -8,15 +8,19 @@ final class HotkeyTests: XCTestCase {
         XCTAssertTrue(Hotkey.default.isValid)
     }
 
-    func testShortcutNeedsCommandOptionOrControl() {
+    func testShortcutNeedsTwoOfCommandOptionControl() {
         XCTAssertFalse(Hotkey(keyCode: 11, modifiers: []).isValid)
         XCTAssertFalse(Hotkey(keyCode: 11, modifiers: [.shift]).isValid)
-        XCTAssertTrue(Hotkey(keyCode: 11, modifiers: [.option]).isValid)
+        XCTAssertFalse(Hotkey(keyCode: 11, modifiers: [.option]).isValid, "⌥B types ∫")
+        XCTAssertFalse(Hotkey(keyCode: 11, modifiers: [.command]).isValid, "⌘B is Bold everywhere")
+        XCTAssertFalse(Hotkey(keyCode: 8, modifiers: [.control]).isValid, "⌃C interrupts in Terminal")
+        XCTAssertFalse(Hotkey(keyCode: 11, modifiers: [.command, .shift]).isValid, "⇧ doesn't count")
+        XCTAssertTrue(Hotkey(keyCode: 11, modifiers: [.option, .command]).isValid)
     }
 
     func testUnknownKeysAreInvalid() {
-        XCTAssertFalse(Hotkey(keyCode: 53, modifiers: [.command]).isValid) // Esc
-        XCTAssertFalse(Hotkey(keyCode: 999, modifiers: [.command]).isValid)
+        XCTAssertFalse(Hotkey(keyCode: 53, modifiers: [.command, .option]).isValid) // Esc
+        XCTAssertFalse(Hotkey(keyCode: 999, modifiers: [.command, .option]).isValid)
     }
 
     func testNonCharacterKeysHaveNoMenuEquivalent() {

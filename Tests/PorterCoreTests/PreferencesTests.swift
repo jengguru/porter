@@ -33,7 +33,7 @@ final class PreferencesTests: XCTestCase {
         prefs.favoriteA = KnownBrowsers.brave
         prefs.menuOrder = [KnownBrowsers.safari, KnownBrowsers.brave]
         prefs.hiddenInMenu = ["com.google.chrome"]
-        prefs.hotkey = Hotkey(keyCode: 45, modifiers: [.command, .shift])
+        prefs.hotkey = Hotkey(keyCode: 45, modifiers: [.control, .option])
         prefs.iconStyle = .monochrome
         prefs.autoConfirmDialog = true
 
@@ -41,7 +41,7 @@ final class PreferencesTests: XCTestCase {
         XCTAssertEqual(reloaded.favoriteA, KnownBrowsers.brave)
         XCTAssertEqual(reloaded.menuOrder, [KnownBrowsers.safari, KnownBrowsers.brave])
         XCTAssertEqual(reloaded.hiddenInMenu, ["com.google.chrome"])
-        XCTAssertEqual(reloaded.hotkey, Hotkey(keyCode: 45, modifiers: [.command, .shift]))
+        XCTAssertEqual(reloaded.hotkey, Hotkey(keyCode: 45, modifiers: [.control, .option]))
         XCTAssertEqual(reloaded.iconStyle, .monochrome)
         XCTAssertTrue(reloaded.autoConfirmDialog)
     }
@@ -50,7 +50,7 @@ final class PreferencesTests: XCTestCase {
         defaults.set("/Applications/Evil.app; rm -rf", forKey: "favoriteA")
         defaults.set(["ok.id", "not ok"], forKey: "menuOrder")
         defaults.set(11, forKey: "hotkeyKeyCode")
-        defaults.set(0, forKey: "hotkeyModifiers") // no modifier: would swallow typing
+        defaults.set(Hotkey.Modifiers.command.rawValue, forKey: "hotkeyModifiers") // ⌘B alone would steal Bold
         defaults.set("sparkly", forKey: "iconStyle")
 
         let prefs = Preferences(defaults: defaults)

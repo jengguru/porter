@@ -26,7 +26,8 @@ final class HotkeyService {
             Self.carbonModifiers(hotkey.modifiers),
             EventHotKeyID(signature: porterHotkeySignature, id: 1),
             GetEventDispatcherTarget(),
-            0,
+            // Exclusive: fail instead of sharing if another app already holds this combination.
+            OptionBits(kEventHotKeyExclusive),
             &ref
         )
         guard status == noErr, let ref else { return false }

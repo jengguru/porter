@@ -48,12 +48,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func updateHotkey(enabled: Bool, hotkey: Hotkey, paused: Bool) {
+        hotkeys.unregister()
         guard enabled, !paused else {
-            hotkeys.unregister()
-            model.hotkeyRegistrationFailed = false
+            model.hotkeyProblem = nil
             return
         }
-        model.hotkeyRegistrationFailed = !hotkeys.register(hotkey)
+        // Never claim a combination macOS or a common app already uses.
+        if let problem = model.problem(for: hotkey) {
+            model.hotkeyProblem = problem
+            return
+        }
+        model.hotkeyProblem = hotkeys.register(hotkey) ? nil : .inUseByAnotherApp
     }
 
     /// A minimal main menu so ⌘W / ⌘Q / ⌘C work while the Settings window is focused.

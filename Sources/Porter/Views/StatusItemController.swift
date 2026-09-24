@@ -82,6 +82,9 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
         menu.addItem(.separator())
         menu.addItem(switchItem())
+        if model.preferences.hotkeyEnabled, model.hotkeyProblem != nil {
+            menu.addItem(disabledItem(String(localized: "Shortcut \(model.preferences.hotkey.displayString) is taken — change it in Settings")))
+        }
         menu.addItem(.separator())
 
         let settings = NSMenuItem(title: String(localized: "Settings…"), action: #selector(showSettings), keyEquivalent: ",")
@@ -113,7 +116,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         }
 
         let hotkey = model.preferences.hotkey
-        if model.preferences.hotkeyEnabled, !model.hotkeyRegistrationFailed, let key = hotkey.menuKeyEquivalent {
+        if model.preferences.hotkeyEnabled, model.hotkeyProblem == nil, let key = hotkey.menuKeyEquivalent {
             item.keyEquivalent = key
             item.keyEquivalentModifierMask = Self.eventModifiers(hotkey.modifiers)
         }

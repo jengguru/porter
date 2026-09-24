@@ -15,7 +15,8 @@ final class AppModel: ObservableObject {
     @Published private(set) var currentDefault: Browser?
     @Published private(set) var isSwitching = false
     @Published var isRecordingShortcut = false
-    @Published var hotkeyRegistrationFailed = false
+    /// Why the global shortcut isn't active, if it isn't.
+    @Published var hotkeyProblem: HotkeyProblem?
 
     private let workspace: WorkspaceProviding
     private let discovery: BrowserDiscovery
@@ -92,6 +93,12 @@ final class AppModel: ObservableObject {
         var ids = orderedBrowsers.map(\.bundleID)
         ids.move(fromOffsets: source, toOffset: destination)
         preferences.menuOrder = ids
+    }
+
+    /// Checked when recording a shortcut and again every time one is registered, since the
+    /// user may have changed System Settings in the meantime.
+    func problem(for hotkey: Hotkey) -> HotkeyProblem? {
+        HotkeyValidator.problem(for: hotkey, systemShortcuts: SystemShortcuts.enabled())
     }
 
     // MARK: - Refreshing

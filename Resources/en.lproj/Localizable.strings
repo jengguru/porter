@@ -16,6 +16,7 @@
 "Switch: choose two favorites in Settings" = "Switch: choose two favorites in Settings";
 "Switch: favorites A and B are the same" = "Switch: favorites A and B are the same";
 "Switch: %@ is not installed" = "Switch: %@ is not installed";
+"Shortcut %@ is taken — change it in Settings" = "Shortcut %@ is taken — change it in Settings";
 
 /* Switching */
 "%@ is not installed." = "%@ is not installed.";
@@ -47,3 +48,10 @@
 "Type shortcut…" = "Type shortcut…";
 "Privacy" = "Privacy";
 "Notifications" = "Notifications";
+
+/* Shortcut problems */
+"Use at least two of ⌘ ⌥ ⌃, so it can't clash with app shortcuts or typing." = "Use at least two of ⌘ ⌥ ⌃, so it can't clash with app shortcuts or typing.";
+"This key can't be used in a shortcut." = "This key can't be used in a shortcut.";
+"Already used by macOS (System Settings › Keyboard › Keyboard Shortcuts)." = "Already used by macOS (System Settings › Keyboard › Keyboard Shortcuts).";
+"Already used by macOS or common apps: %@." = "Already used by macOS or common apps: %@.";
+"Already used by another app." = "Already used by another app.";
