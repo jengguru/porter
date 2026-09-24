@@ -1,0 +1,49 @@
+/*
+  Porter — English strings.
+  Keys are the English source text. To add Thai, copy this file to
+  Resources/th.lproj/Localizable.strings, translate the right-hand side, and add
+  "th" to CFBundleLocalizations in Resources/Info.plist.
+*/
+
+/* Menu */
+"Settings…" = "Settings…";
+"Quit Porter" = "Quit Porter";
+"No browsers found" = "No browsers found";
+"Default browser unknown" = "Default browser unknown";
+"Default browser: %@" = "Default browser: %@";
+"⌥-click to switch favorites" = "⌥-click to switch favorites";
+"Switch to %@" = "Switch to %@";
+"Switch: choose two favorites in Settings" = "Switch: choose two favorites in Settings";
+"Switch: favorites A and B are the same" = "Switch: favorites A and B are the same";
+"Switch: %@ is not installed" = "Switch: %@ is not installed";
+
+/* Switching */
+"%@ is not installed." = "%@ is not installed.";
+"%@ can't be made the default browser." = "%@ can't be made the default browser.";
+"macOS couldn't make %@ the default browser." = "macOS couldn't make %@ the default browser.";
+"Pick a different favorite in Porter Settings." = "Pick a different favorite in Porter Settings.";
+"Default browser changed" = "Default browser changed";
+"Links now open in %@." = "Links now open in %@.";
+
+/* Settings */
+"Porter Settings" = "Porter Settings";
+"General" = "General";
+"Menu" = "Menu";
+"Shortcut" = "Shortcut";
+"Advanced" = "Advanced";
+"Favorites" = "Favorites";
+"Favorite A" = "Favorite A";
+"Favorite B" = "Favorite B";
+"Appearance" = "Appearance";
+"Menu bar icon" = "Menu bar icon";
+"App colors" = "App colors";
+"Monochrome" = "Monochrome";
+"Startup" = "Startup";
+"Launch at login" = "Launch at login";
+"Not installed — switching to it is disabled." = "Not installed — switching to it is disabled.";
+"%@ (Not installed)" = "%@ (Not installed)";
+"Enable global shortcut" = "Enable global shortcut";
+"Switch favorites" = "Switch favorites";
+"Type shortcut…" = "Type shortcut…";
+"Privacy" = "Privacy";
+"Notifications" = "Notifications";

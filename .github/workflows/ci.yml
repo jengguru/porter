@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Toolchain
+        run: swift --version
+
+      - name: Unit tests
+        run: swift test
+
+      - name: Build Porter.app (Universal)
+        run: scripts/build-app.sh
+
+      - name: Package
+        run: ditto -c -k --keepParent dist/Porter.app dist/Porter.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Porter
+          path: dist/Porter.zip
+          retention-days: 14
