@@ -35,6 +35,10 @@ scripts/build-app.sh        # -> dist/Porter.app (Universal, ad-hoc signed)
 
 For a quicker, single-architecture build: `ARCHS=arm64 scripts/build-app.sh`.
 
+The app icon is drawn by `scripts/make-icon.py` (needs Pillow). It writes
+`Resources/AppIcon.icns`, which the build script bundles. The generated file is committed,
+so you only need to run the script if you change the design.
+
 To work in Xcode, open `Package.swift`. `swift run Porter` also works for a quick try, but
 launch at login and notifications need the real `.app` bundle.
 
@@ -159,7 +163,7 @@ Sources/
     ├── Services/               # SystemWorkspace (NSWorkspace), HotkeyService (Carbon),
     │                           # DialogAutoConfirm (AX), LoginItem, Notifier, IconProvider
     └── Views/                  # StatusItemController (NSStatusItem/NSMenu), SwiftUI settings
-Resources/                      # Info.plist (LSUIElement), en.lproj/Localizable.strings
+Resources/                      # Info.plist (LSUIElement), AppIcon.icns, en.lproj/Localizable.strings
 Tests/PorterCoreTests/          # toggle logic, switching/verification, discovery, prefs, hotkeys
 scripts/build-app.sh
 ```
